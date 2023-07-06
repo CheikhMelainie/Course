@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Courses
+namespace Courses.Data
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Courses_DBEntities : DbContext
+    public partial class Courses_DBEntities1 : DbContext
     {
-        public Courses_DBEntities()
-            : base("name=Courses_DBEntities")
+        public Courses_DBEntities1()
+            : base("name=Courses_DBEntities1")
         {
         }
     
@@ -29,6 +29,7 @@ namespace Courses
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Course_Lessons> Course_Lessons { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Trainee> Trainees { get; set; }
         public virtual DbSet<Trainee_Courses> Trainee_Courses { get; set; }
         public virtual DbSet<Trainer> Trainers { get; set; }

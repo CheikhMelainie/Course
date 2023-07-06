@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Courses
+namespace Courses.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Trainee_Courses
+    public partial class sysdiagram
     {
-        public int Trainnee_id { get; set; }
-        public int Course_id { get; set; }
-        public System.DateTime Registration_Date { get; set; }
-    
-        public virtual Course Course { get; set; }
-        public virtual Trainee Trainee { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

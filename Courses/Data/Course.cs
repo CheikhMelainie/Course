@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Courses
+namespace Courses.Data
 {
     using System;
     using System.Collections.Generic;

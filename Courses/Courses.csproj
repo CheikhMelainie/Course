@@ -122,19 +122,18 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="CoursesModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CoursesModel.Context.cs</LastGenOutput>
-      <DependentUpon>CoursesModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="CoursesModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CoursesModel.edmx</DependentUpon>
-      <LastGenOutput>CoursesModel.cs</LastGenOutput>
-    </Content>
     <Content Include="css\styles.css" />
+    <Content Include="Data\CoursesEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoursesEntities.edmx</DependentUpon>
+      <LastGenOutput>CoursesEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\CoursesEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoursesEntities.edmx</DependentUpon>
+      <LastGenOutput>CoursesEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
     <Content Include="js\datatables-simple-demo.js" />
     <Content Include="js\scripts.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -142,7 +141,6 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Default\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -171,6 +169,16 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Data\CoursesEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CoursesEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Data\CoursesEntities.edmx.diagram">
+      <DependentUpon>CoursesEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_OfflineLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -181,39 +189,53 @@
     <Content Include="Views\Course\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Areas\Instracter\InstracterAreaRegistration.cs" />
-    <Compile Include="Category.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Course.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
+    <Compile Include="Data\Admin.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="CoursesModel.Context.cs">
+    <Compile Include="Data\Category.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Course.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CoursesEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CoursesModel.Context.tt</DependentUpon>
+      <DependentUpon>CoursesEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="CoursesModel.cs">
+    <Compile Include="Data\CoursesEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CoursesModel.tt</DependentUpon>
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="CoursesModel.Designer.cs">
+    <Compile Include="Data\CoursesEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CoursesModel.edmx</DependentUpon>
+      <DependentUpon>CoursesEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Course_Lessons.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
+    <Compile Include="Data\Course_Lessons.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sysdiagram.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Trainee.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Trainee_Courses.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Trainer.cs">
+      <DependentUpon>CoursesEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,25 +243,10 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trainee.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Trainee_Courses.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Trainer.cs">
-      <DependentUpon>CoursesModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Services\AdminService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <EntityDeploy Include="CoursesModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CoursesModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="CoursesModel.edmx.diagram">
-      <DependentUpon>CoursesModel.edmx</DependentUpon>
-    </Content>
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -254,7 +261,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Instracter\Controllers\" />
     <Folder Include="Areas\Instracter\Models\" />
     <Folder Include="Areas\Instracter\Views\Shared\" />
