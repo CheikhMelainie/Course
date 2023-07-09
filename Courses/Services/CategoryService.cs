@@ -12,6 +12,7 @@ namespace Courses.Services
         Category ReadById(int id);
         List<Category> ReadAll();
         int Create(Category newCategory);
+        bool Delete(int id);
     }
     public class CategoryService : ICategoryService
     {
@@ -32,6 +33,18 @@ namespace Courses.Services
 
             db.Categories.Add(newCategory);
             return db.SaveChanges();
+        }
+
+        public bool Delete(int id)
+        {
+            var category = ReadById(id);
+            if(category != null)
+            {
+                db.Categories.Remove(category);
+                return  db.SaveChanges() > 0 ? true : false;
+            }
+
+            return false;
         }
 
         public List<Category> ReadAll()

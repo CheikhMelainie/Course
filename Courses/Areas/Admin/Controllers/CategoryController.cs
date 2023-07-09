@@ -119,6 +119,38 @@ namespace Courses.Areas.Admin.Controllers
             return View(data);
         }
 
+        public ActionResult Delete(int? Id)
+        {
+            if(Id != null)
+            {
+                var category = categoryService.ReadById(Id.Value);
+                var categoryInfo = new CategoryModel
+                {
+                    Id = category.ID,
+                    Name = category.Name,
+                    ParentName = category.Category2?.Name
+                };
+
+                return View(categoryInfo);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int? Id)
+        {
+            if(Id!=null)
+            {
+              var deleted =   categoryService.Delete(Id.Value);
+                if(deleted)
+                {
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Delete", new { Id = Id });
+            }
+            return HttpNotFound();
+        }
+
         private void InitMainCategories(int? categoryToExclude, ref CategoryModel categoryModel)
         {
             var categoriesList = categoryService.ReadAll();
