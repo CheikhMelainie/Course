@@ -13,6 +13,8 @@ namespace Courses
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            AutoMapperConfig.Init();
         }
     }
 }

@@ -6,31 +6,28 @@ using System.Web;
 using System.Web.Mvc;
 using Courses.Models;
 using Courses.Data;
+using AutoMapper;
 
 namespace Courses.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly CategoryService categoryService;
+
+        private readonly IMapper mapper;
+
         public CategoryController()
         {
             categoryService = new CategoryService();
+            mapper = AutoMapperConfig.Mapper;
         }
 
         // GET: Admin/Category
         public ActionResult Index()
         {
             var categories = categoryService.ReadAll();
-            var categoriesList = new List<CategoryModel>();
-            foreach (var item in categories)
-            {
-                categoriesList.Add(new CategoryModel
-                {
-                    Id = item.ID,
-                    Name = item.Name,
-                    ParentName = item.Category2?.Name
-                });
-            }
+
+            var categoriesList = mapper.Map<List<CategoryModel>>(categories);
 
             return View(categoriesList);
         }
@@ -45,12 +42,9 @@ namespace Courses.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(CategoryModel data)
         {
-          
-                int creationResult = categoryService.Create(new Data.Category
-                {
-                    Name = data.Name,
-                    Parent_id = data.ParentId
-                });
+            var newCategory = mapper.Map<Category>(data);
+                 newCategory.Category2 = null;
+                int creationResult = categoryService.Create(newCategory);
 
                 if(creationResult == -2)
                 {
