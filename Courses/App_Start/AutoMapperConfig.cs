@@ -16,6 +16,8 @@ namespace Courses
                 .ForMember(dst => dst.ParentId, src => src.MapFrom(e => e.Category2.Parent_id))
                 .ForMember(dst => dst.ParentName, src => src.MapFrom(e => e.Category2.Name))
                 .ReverseMap();
+
+                cfg.CreateMap<Trainer, TrainerModel>().ReverseMap();
             });
 
             Mapper = config.CreateMapper();
