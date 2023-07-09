@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Courses.Models;
+using Courses.Data;
 
 namespace Courses.Areas.Admin.Controllers
 {
@@ -20,10 +21,10 @@ namespace Courses.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var categories = categoryService.ReadAll();
-            var categoriesList = new List<Category>();
+            var categoriesList = new List<CategoryModel>();
             foreach (var item in categories)
             {
-                categoriesList.Add(new Category
+                categoriesList.Add(new CategoryModel
                 {
                     Id = item.ID,
                     Name = item.Name,
@@ -41,7 +42,7 @@ namespace Courses.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Category data)
+        public ActionResult Create(CategoryModel data)
         {
             if(ModelState.IsValid)
             {
@@ -59,6 +60,59 @@ namespace Courses.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return RedirectToAction("index", "Home");
+            }
+
+            var currentCategory = categoryService.ReadById(id.Value);
+
+            if(currentCategory == null)
+            {
+                return HttpNotFound($"This category ({id}) not found! ");
+            }
+            var categoryModel = new CategoryModel
+            {
+                Id = currentCategory.ID,
+                Name = currentCategory.Name,
+                ParentId = currentCategory.Parent_id
+            };
+
+            return View(categoryModel);
+        }
+        [HttpPost]
+        public ActionResult Edit(CategoryModel data)
+        {
+            if(ModelState.IsValid)
+            {
+                var updatedCategory = new Category
+                {
+                    ID = data.Id,
+                    Name = data.Name,
+                    Parent_id = data.ParentId
+                };
+                var result = categoryService.Update(updatedCategory);
+
+                if (result == -2)
+                {
+                    ViewBag.Message = "Category Name is exists!";
+                    return View(data);
+                }
+                else if (result > 0)
+                {
+                    ViewBag.Success = true;
+                    ViewBag.Message = $"Category ({data.Id}) updated successfully";
+                }
+                else
+                {
+                    ViewBag.Message = $"An error occured!";
+                }
+            }
+            return View(data);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Courses.Services
 {
     public interface ICategoryService
     {
+        int Update(Category updatedCategory);
+        Category ReadById(int id);
         List<Category> ReadAll();
         int Create(Category newCategory);
     }
@@ -35,6 +37,28 @@ namespace Courses.Services
         public List<Category> ReadAll()
         {
            return  db.Categories.ToList();
+        }
+
+        public Category ReadById(int id)
+        {
+            return db.Categories.Find(id);
+        }
+
+        public int Update(Category updatedCategory)
+        {
+            var categoryName = updatedCategory.Name.ToLower();
+            var categoryNameExixts = db.Categories.Where(c => c.Name.ToLower() == categoryName).Any();
+            if (categoryNameExixts)
+            {
+                return -2;
+            }
+
+
+            db.Categories.Attach(updatedCategory);
+            db.Entry(updatedCategory).State = System.Data.Entity.EntityState.Modified;
+            return db.SaveChanges();
+
+           
         }
     }
 }

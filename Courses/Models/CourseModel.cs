@@ -12,6 +12,6 @@ namespace Courses.Models
         public string Description { get; set; }
         public int CategoruId { get; set; }
 
-        public Category category { get; set; }
+        public CategoryModel category { get; set; }
     }
 }
