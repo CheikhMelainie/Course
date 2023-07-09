@@ -28,7 +28,6 @@ namespace Courses.Areas.Admin.Controllers
                 {
                     Id = item.ID,
                     Name = item.Name,
-                    ParentId = item.Parent_id,
                     ParentName = item.Category2?.Name
                 });
             }
@@ -38,28 +37,31 @@ namespace Courses.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var categoryModel = new CategoryModel();
+            InitMainCategories(null, ref categoryModel);
+            return View(categoryModel);
         }
 
         [HttpPost]
         public ActionResult Create(CategoryModel data)
         {
-            if(ModelState.IsValid)
-            {
+          
                 int creationResult = categoryService.Create(new Data.Category
                 {
-                    Name = data.Name
+                    Name = data.Name,
+                    Parent_id = data.ParentId
                 });
 
                 if(creationResult == -2)
                 {
-                    ViewBag.Message = "Category Name is exists!";
+                InitMainCategories(null, ref data);
+
+                ViewBag.Message = "Category Name is exists!";
                     return View (data);
                 }
 
                 return RedirectToAction("Index");
-            }
-            return View();
+            
         }
 
         public ActionResult Edit(int? id)
@@ -82,13 +84,14 @@ namespace Courses.Areas.Admin.Controllers
                 ParentId = currentCategory.Parent_id
             };
 
+            InitMainCategories(currentCategory.ID, ref categoryModel);
+
             return View(categoryModel);
         }
         [HttpPost]
         public ActionResult Edit(CategoryModel data)
         {
-            if(ModelState.IsValid)
-            {
+            
                 var updatedCategory = new Category
                 {
                     ID = data.Id,
@@ -100,7 +103,8 @@ namespace Courses.Areas.Admin.Controllers
                 if (result == -2)
                 {
                     ViewBag.Message = "Category Name is exists!";
-                    return View(data);
+                    InitMainCategories(data.Id, ref data);
+                return View(data);
                 }
                 else if (result > 0)
                 {
@@ -111,8 +115,21 @@ namespace Courses.Areas.Admin.Controllers
                 {
                     ViewBag.Message = $"An error occured!";
                 }
-            }
+            InitMainCategories(data.Id, ref data);
             return View(data);
+        }
+
+        private void InitMainCategories(int? categoryToExclude, ref CategoryModel categoryModel)
+        {
+            var categoriesList = categoryService.ReadAll();
+
+            if(categoryToExclude!=null)
+            {
+                var currentcategory = categoriesList.Where(c => c.ID == categoryToExclude).FirstOrDefault();
+                categoriesList.Remove(currentcategory);
+            }
+
+            categoryModel.MainCategories = new SelectList(categoriesList, "ID", "Name");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Courses.Models
 {
@@ -15,7 +16,10 @@ namespace Courses.Models
         public string Name { get; set; }
 
         public int? ParentId { get; set; }
+
         public string ParentName { get; set; }
+
+        public SelectList  MainCategories{ get; set; }
 
     }
 }

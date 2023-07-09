@@ -47,10 +47,11 @@ namespace Courses.Services
         public int Update(Category updatedCategory)
         {
             var categoryName = updatedCategory.Name.ToLower();
-            var categoryNameExixts = db.Categories.Where(c => c.Name.ToLower() == categoryName).Any();
-            if (categoryNameExixts)
+            var categoriesList = db.Categories.Where(c => c.Name.ToLower() != categoryName);
+
+            if (categoriesList.Where(c => c.Name.ToLower() == categoryName).Any()) 
             {
-                return -2;
+                return - 2;
             }
 
 
