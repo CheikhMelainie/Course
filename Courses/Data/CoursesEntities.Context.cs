@@ -33,5 +33,7 @@ namespace Courses.Data
         public virtual DbSet<Trainee> Trainees { get; set; }
         public virtual DbSet<Trainee_Courses> Trainee_Courses { get; set; }
         public virtual DbSet<Trainer> Trainers { get; set; }
+
+        public System.Data.Entity.DbSet<Courses.Models.CourseModel> CourseModels { get; set; }
     }
 }
