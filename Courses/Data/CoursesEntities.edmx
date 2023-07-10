@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Courses_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Courses_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="ID" />
@@ -30,6 +30,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Creation_Date" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Image_Id" Type="nvarchar" MaxLength="200" />
           <Property Name="Category_id" Type="int" Nullable="false" />
           <Property Name="Trainer_id" Type="int" />
         </EntityType>
@@ -189,8 +190,7 @@
             <End Role="Trainee_Courses" EntitySet="Trainee_Courses" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Courses_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -228,6 +228,7 @@
           <NavigationProperty Name="Course_Lessons" Relationship="Self.FK_Course_Lessons_Course_id" FromRole="Course" ToRole="Course_Lessons" />
           <NavigationProperty Name="Trainer" Relationship="Self.FK_Course_Trainer_id" FromRole="Course" ToRole="Trainer" />
           <NavigationProperty Name="Trainee_Courses" Relationship="Self.FK_Trainee_Courses_Course_id" FromRole="Course" ToRole="Trainee_Courses" />
+          <Property Name="Image_Id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Course_Lessons">
           <Key>
@@ -418,6 +419,7 @@
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="Courses_DBModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Image_Id" ColumnName="Image_Id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
