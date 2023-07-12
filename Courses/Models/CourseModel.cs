@@ -31,7 +31,7 @@ namespace Courses.Models
         {
             set
             {
-                _imageId = string.IsNullOrWhiteSpace(value) ? "empty.jpg" : value;
+                _imageId = string.IsNullOrWhiteSpace(value) ? "drawio.png" : value;
             }
             get
             {

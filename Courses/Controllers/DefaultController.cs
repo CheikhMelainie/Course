@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using Courses.Data;
+using Courses.Models;
+using Courses.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +12,19 @@ namespace Courses.Controllers
 {
     public class DefaultController : Controller
     {
-        // GET: Default
+        private readonly IMapper mapper;
+        private readonly CourseService courseService;
+        public DefaultController()
+        {
+            mapper = AutoMapperConfig.Mapper;
+
+            courseService = new CourseService();
+        }
+        // GET: Course
         public ActionResult Index()
         {
-            return View();
+            var courses = courseService.ReadAll();
+            return View(mapper.Map<List<Course>, List<CourseModel>>(courses));
         }
     }
 }
