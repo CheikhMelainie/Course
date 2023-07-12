@@ -60,7 +60,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="250" />
           <Property Name="Creation_Date" Type="datetime" Nullable="false" />
           <Property Name="Is_Active" Type="int" />
         </EntityType>
@@ -257,7 +257,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Is_Active" Type="Int32" />
           <NavigationProperty Name="Trainee_Courses" Relationship="Self.FK_Trainee_Courses_Trainee_id" FromRole="Trainee" ToRole="Trainee_Courses" />

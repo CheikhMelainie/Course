@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Courses.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DefaultController : Controller
     {
         // GET: Admin/Default

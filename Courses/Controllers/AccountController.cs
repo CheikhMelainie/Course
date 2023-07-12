@@ -1,5 +1,6 @@
 ﻿using Courses.Data;
 using Courses.Models;
+using Courses.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -15,28 +16,71 @@ namespace Courses.Controllers
     {
 
         private readonly UserManager<MyIdentityUser> userManager;
-
+        private readonly TraineeService traineeService;
         public AccountController()
         {
             var db = new CoursesIdentityContext();
             var userStore = new UserStore<MyIdentityUser>(db);
             userManager = new UserManager<MyIdentityUser>(userStore);
-        }
-            
 
-        // GET: Account
-        public async Task<ActionResult> Login()
+            traineeService = new TraineeService();
+        }
+
+
+        [AllowAnonymous]
+        public async Task<ActionResult> Login(string ReturnUrl ="")
         {
-           var user = await userManager.CreateAsync(new MyIdentityUser
+            return View(new LoginViewModel
             {
-                Email = "ao@ao.com",
-                UserName = "ao@ao.com"
-
-            }, "123456");
-            ViewBag.User = user.Succeeded;
-            return View();
+                 ReturnUrl = ReturnUrl
+            });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel loginData)
+        {
+            if (ModelState.IsValid)
+            {
+                var existsUser = await userManager.FindAsync(loginData.Email, loginData.Password);
+
+                if (existsUser != null)
+                {
+                    await SignIn(existsUser);
+
+                    // Business
+                    if (!string.IsNullOrEmpty(loginData.ReturnUrl))
+                    {
+                        return Redirect(loginData.ReturnUrl);
+                    }
+
+                    var userRoles = userManager.GetRoles(existsUser.Id);
+                    var role = userRoles.FirstOrDefault();
+                    if (role == "Admin")
+                    {
+                        return RedirectToAction("Index", "Default", new { area = "Admin" });
+                    }
+
+
+                    return RedirectToAction("Index", "Default");
+                }
+
+                loginData.Message = "Email or Password is incorrect!";
+            }
+
+            return View(loginData);
+        }
+
+        private async Task SignIn(MyIdentityUser myIdentityUser)
+        {
+            var identity = await userManager.CreateIdentityAsync(myIdentityUser, DefaultAuthenticationTypes.ApplicationCookie);
+
+            var owinContext = Request.GetOwinContext();
+            var authManager = owinContext.Authentication;
+            authManager.SignIn(identity);
+        }
+
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -60,9 +104,28 @@ namespace Courses.Controllers
                 if (creationResult.Succeeded)
                 {
                     var userId = identityUser.Id;
-                    creationResult = userManager.AddToRole(userId, "Admin");
+                    creationResult = userManager.AddToRole(userId, "Trainee");
 
-                    return RedirectToAction("Index", "Default", new { area = "Admin" });
+                    //Role Assigned
+                    if(creationResult.Succeeded)
+                    {
+                        //Save to Trainee Table
+                       var saveTrainee =  traineeService.Create(new Trainee
+                        {
+                            Email = userInfo.Email,
+                            Name = userInfo.Name,
+                            Is_Active = 1,
+                            Creation_Date = DateTime.Now
+                        });
+
+                        if(saveTrainee == null)
+                        {
+                            userInfo.Message = "An Error while creating your account";
+                            return View(userInfo);
+                        }
+                        return RedirectToAction("Index", "Default");
+                    }
+                    
                 }
 
                 var message = creationResult.Errors.FirstOrDefault();

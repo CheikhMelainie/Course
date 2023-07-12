@@ -11,6 +11,7 @@ using Courses.Data;
 
 namespace Courses.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TrainersController : Controller
     {
         private Courses_DBEntities1 db = new Courses_DBEntities1();

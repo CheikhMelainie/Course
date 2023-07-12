@@ -10,6 +10,7 @@ using AutoMapper;
 
 namespace Courses.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly CategoryService categoryService;

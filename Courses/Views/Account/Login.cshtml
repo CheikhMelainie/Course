@@ -1,4 +1,4 @@
-﻿
+﻿@model Courses.Models.LoginViewModel
 @{
     ViewBag.Title = "user-auth";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -14,24 +14,30 @@
             <div id="user-auth-row" class="row justify-content-center align-items-center">
                 <div id="user-auth-column" class="col-md-6">
                     <div id="user-auth-box" class="col-md-12 user-auth-box-user-auth">
-                        <form id="user-auth-form" class="form" action="" method="post">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.ReturnUrl)
+
                             <h3 class="text-center text-info">user-auth</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
+                                @Html.LabelFor(m => m.Email, new { @class = "text-info" })
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="password" class="text-info">Password:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                @Html.LabelFor(m => m.Password, new { @class = "text-info" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Login">
                             </div>
                             <div id="register-link" class="text-right">
-                               @Html.ActionLink("Register Her", "Register", "Account", new { @class= "text-info"})
-                                </div>
-                        </form>
+                                @Html.ActionLink("Register Her", "Register", "Account", new { @class = "text-info" })
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
