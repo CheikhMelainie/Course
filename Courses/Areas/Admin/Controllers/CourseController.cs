@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Courses.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize]
     public class CourseController : Controller
     {
         private readonly IMapper mapper;

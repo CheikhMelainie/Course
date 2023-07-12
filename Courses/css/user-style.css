@@ -1,0 +1,31 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height:500px;
+}
+
+#user-auth .container #user-auth-row #user-auth-column #user-auth-box {
+    margin-top: 120px;
+    max-width: 600px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+    height:500px;
+}
+
+.user-auth-box-user-auth {
+    height: 380px;
+}
+
+.user-auth-box-Register {
+    height: 500px;
+}
+
+
+#user-auth .container #user-auth-row #user-auth-column #user-auth-box #user-auth-form {
+        padding: 20px;
+    }
+
+        #user-auth .container #user-auth-row #user-auth-column #user-auth-box #user-auth-form #register-link {
+            margin-top: -85px;
+        }
