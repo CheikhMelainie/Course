@@ -136,5 +136,17 @@ namespace Courses.Controllers
 
             return View(userInfo);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Logout()
+        {
+            var owinContext = Request.GetOwinContext();
+            var authManager = owinContext.Authentication;
+            authManager.SignOut("ApplicationCookie");
+            Session.Abandon();
+
+            return RedirectToAction("Index", "Default");
+        }
     }
 }
