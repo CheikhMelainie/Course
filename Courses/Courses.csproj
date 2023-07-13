@@ -371,6 +371,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Course\Info.cshtml" />
+    <Content Include="Views\Shared\_coursesListView.cshtml" />
+    <Content Include="Views\Course\Subscribe.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
